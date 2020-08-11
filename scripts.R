@@ -3,13 +3,13 @@ library(RPostgres)
 
 # setwd("~/Downloads/download/OneDrive_1_29.07.2020/")
 
-# default credentials
-Sys.setenv("DB_HOST" = "localhost")
-Sys.setenv("DB_USER" = "postgres")
-Sys.setenv("DB_PASSWORD" = "postgres")
-Sys.setenv("DB_NAME" = "postgres")
-Sys.setenv("DB_PORT" = "5432")
-Sys.setenv("DB_SCHEMA" = "public")
+# pass the DB credentials here
+Sys.setenv("DB_HOST" = "DB_HOST")
+Sys.setenv("DB_USER" = "DB_USER")
+Sys.setenv("DB_PASSWORD" = "DB_PASSWORD")
+Sys.setenv("DB_NAME" = "DB_NAME")
+Sys.setenv("DB_PORT" = "DB_PORT")
+Sys.setenv("DB_SCHEMA" = "DB_SCHEMA")
 
 database_connection <- dbConnect(
   Postgres(),
@@ -26,7 +26,7 @@ load_table_to_database <- function(table_name, data_to_load, database_connection
     dbBegin(database_connection)
     dbWriteTable(database_connection, table_name, data_to_load, append = TRUE)
     dbCommit(database_connection)
-    print(paste("Loading to", table_name + " succeded", sep = " "))
+    print(paste("Loading to", table_name + "succeded", sep = " "))
   }, error = function(err){
     dbRollback(database_connection)
     print(paste("Loading to" + table_name + "failed:", err, sep = " "))
@@ -35,9 +35,9 @@ load_table_to_database <- function(table_name, data_to_load, database_connection
   })
 }
 
-class <- read_delim(file = 'class.csv', delim = ';')
-test_level <- read_delim(file = 'test_level.csv', delim = ';')
-test <- read_delim(fil = 'test.csv', delim = ';')
+class <- read_delim(file = 'csv_files/class.csv', delim = ';')
+test_level <- read_delim(file = 'csv_files/test_level.csv', delim = ';')
+test <- read_delim(fil = 'csv_files/test.csv', delim = ';')
 
 check_if_id_is_unique <- function(data_set, data_set_name) {
   distinct_ids_count <- data_set %>%
@@ -53,6 +53,12 @@ check_if_id_is_unique <- function(data_set, data_set_name) {
 }
 
 map2(list(test, test_level, class), list("test", "test_level", "class"), function(data_set, data_set_name) check_if_id_is_unique(data_set, data_set_name))
+
+
+
+
+
+# create result data sets
 
 class_info <- class %>%
   select(id, name, teaching_hours) %>%
@@ -87,8 +93,11 @@ test_average_scores <- test %>%
     avg_class_test_overall_score = mean(overall_score, na.rm = TRUE)
   )
 
-write_csv(test_utilization, path = "test_utilization.csv")
-write_csv(test_average_scores, path = "test_average_scores.csv")
+
+# save results data sets
+
+write_csv(test_utilization, path = "csv_files/test_utilization.csv")
+write_csv(test_average_scores, path = "csv_files/test_average_scores.csv")
 
 
 
