@@ -10,7 +10,7 @@ https://rstudio.cloud/project/1516312
 
 The Package is already deployed there - you can run it without any installation.
 
-All you have to do is to type this command in that R console:
+All you have to do is to type this command in its R console:
 
 ```R
 devtools::load_all(".")
@@ -19,7 +19,7 @@ devtools::load_all(".")
 
 If you'd prefer not to log in to the R Studio Cloud follow the steps below.
 
-## 1. Package installation
+## 1. Local package installation
 
 You can skip this part if you are going to use R Studio Cloud.
 Otherwise, follow the steps below.
@@ -66,9 +66,11 @@ In case of loading the three files no warning appeared (all the numeric columns 
 
 Only one step of data validation was added to the script - testing if ID is unique for each data set. 
 I didn't see a reason to remove any of the records.
-E.g. I found some special characters in class names but I was not convinced it's the reason to drop the appropriate values.
+E.g. I found some special characters in class names but I was not convinced if it's the reason to drop the appropriate values.
 
 In my opinion decision to remove some records (or to automate removing of them) may be taken after a conversation with the data owner / client who knows their business purpose best.
+
+I attached the example tests I made during the data exploration in ```exploration.R``` file.
 
 Command to run (in RStudio Cloud):
 ```R
