@@ -10,4 +10,3 @@
 
   Sys.setenv("DATA_FILE_DIRECTORY" = file.path(getwd(), "data_files"))
 }
-
