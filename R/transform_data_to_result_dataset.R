@@ -14,6 +14,7 @@ prepare_data_sets_to_join <- function() {
 }
 
 #' @import dplyr
+#' @import stringr
 generate_output_data_sets <- function() {
   data_sets_list <- prepare_data_sets_to_join()
 
@@ -26,9 +27,13 @@ generate_output_data_sets <- function() {
     filter(!is.na(test_authorized_at)) %>%
     left_join(class_info, by = "class_id") %>%
     left_join(test_level_info, by = "test_level_id") %>%
+    mutate(
+      test_authorized_at =  str_remove(test_authorized_at, " .*$"), # remove time, leave date only
+      test_created_at = str_remove(test_created_at, " .*$")
+    ) %>%
     select(class_id, class_name, teaching_hours, test_id, test_created_at, test_authorized_at, test_level) %>%
     arrange(class_id, class_name, teaching_hours, test_id, test_created_at, test_authorized_at, test_level) %>%
-    group_by(class_id, class_name, teaching_hours, test_created_at, test_authorized_at, test_level) %>%
+    group_by(class_id) %>% # that's how I understood the task - grouping should by only by class_id
     mutate(
       class_test_number = row_number()
     )
@@ -38,11 +43,17 @@ generate_output_data_sets <- function() {
     filter(!is.na(test_authorized_at) & test_status == "SCORING_SCORED") %>%
     left_join(class_info, by = "class_id") %>%
     left_join(test_level_info, by = "test_level_id") %>%
+    mutate(
+      test_authorized_at =  str_remove(test_authorized_at, " .*$"),  # remove hour, leave date only
+      test_created_at = str_remove(test_created_at, " .*$")
+    ) %>%
     select(class_id, class_name, teaching_hours, test_created_at, test_authorized_at, overall_score) %>%
-    group_by(class_id, class_name, teaching_hours, test_created_at, test_authorized_at) %>%
+    arrange(class_id, class_name, teaching_hours, test_created_at, test_authorized_at, overall_score) %>%
+    group_by(class_id) %>%  # that's how I understood the task - grouping should by only by class_id
     mutate(
       avg_class_test_overall_score = mean(overall_score, na.rm = TRUE)
-    )
+    ) %>% 
+    distinct(class_id, class_name, teaching_hours, test_created_at, test_authorized_at, avg_class_test_overall_score)
 
   return(list(test_utilization = test_utilization, test_average_scores = test_average_scores))
 }
