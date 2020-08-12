@@ -1,6 +1,6 @@
 #' @import dplyr
 prepare_data_sets_to_join <- function() {
-  data_sets_list <- get_valid_data_sets()
+  data_sets_list <- get_raw_data_sets()
 
   class_info <- data_sets_list$class %>%
     select(id, name, teaching_hours) %>%
