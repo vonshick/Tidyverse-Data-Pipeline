@@ -117,6 +117,9 @@ load_tables_to_database()
 There were also provided three simple unit tests. 
 They check whether data sets contain appropriate columns.
 
+Their source code is placed under this path:
+```tests/testthat/test-test_of_column_names_in_data.R```
+
 Command to run the tests:
 ```R
 devtools::test()
