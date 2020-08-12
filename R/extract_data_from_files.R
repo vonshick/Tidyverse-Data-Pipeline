@@ -16,6 +16,8 @@ extract_data_from_csv_files <- function() {
   test_level <- read_delim(file = file.path(data_directory, 'test_level.csv'), delim = ';')
   test <- read_delim(fil = file.path(data_directory, 'test.csv'), delim = ';')
 
+  print("Data extracted from the CSV files.")
+
   return(list(class = class, test_level = test_level, test = test))
 }
 

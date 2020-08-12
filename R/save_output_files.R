@@ -12,4 +12,6 @@ save_output_csv_files <- function() {
     output_data_sets$test_average_scores,
     path = file.path(data_directory, 'test_average_scores.csv')
   )
+
+  print(paste("Result data sets were exported to", data_directory, sep = " "))
 }
