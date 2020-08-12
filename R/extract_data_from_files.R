@@ -8,10 +8,10 @@ extract_files_from_zip <- function(data_directory) {
 }
 
 #' @import readr
-load_data_from_csv_files <- function() {
+extract_data_from_csv_files <- function() {
   data_directory <- Sys.getenv("DATA_FILE_DIRECTORY")
   extract_files_from_zip(data_directory)
-  
+
   class <- read_delim(file = file.path(data_directory, 'class.csv'), delim = ';')
   test_level <- read_delim(file = file.path(data_directory, 'test_level.csv'), delim = ';')
   test <- read_delim(fil = file.path(data_directory, 'test.csv'), delim = ';')
@@ -36,7 +36,7 @@ check_if_id_is_unique <- function(data_set) {
 #' @import dplyr
 #' @export
 check_id_uniqueness <- function() {
-  data_sets_list <- load_data_from_csv_files()
+  data_sets_list <- extract_data_from_csv_files()
 
   is_id_unique_for_datasets <- map_lgl(
     data_sets_list,

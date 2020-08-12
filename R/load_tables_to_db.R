@@ -1,4 +1,4 @@
-#'@import RPostgres
+#' @import RPostgres
 set_up_db_connection <- function() {
   database_connection <- dbConnect(
     Postgres(),
@@ -13,10 +13,10 @@ set_up_db_connection <- function() {
   return(database_connection)
 }
 
-#'@import RPostgres
-load_table_to_database <- function(data_set, data_set_name) {
+#' @import RPostgres
+insert_table_to_database <- function(data_set, data_set_name) {
+  database_connection <- set_up_db_connection()
   tryCatch({
-    database_connection <- set_up_db_connection()
     dbBegin(database_connection)
     dbWriteTable(database_connection, data_set_name, data_set, append = TRUE)
     dbCommit(database_connection)
@@ -29,14 +29,15 @@ load_table_to_database <- function(data_set, data_set_name) {
   })
 }
 
-#'@import tidyverse
-#'@export
-load_tables_to_db <- function() {
+#' @import tidyverse
+#' @export
+load_tables_to_database <- function() {
   output_data_sets <- generate_output_data_sets()
-  load_logs <- map2(
+
+  logs <- map2(
       output_data_sets,
       names(output_data_sets),
-      function(data_set, data_set_name) load_table_to_database(data_set, data_set_name)
+      function(data_set, data_set_name) insert_table_to_database(data_set, data_set_name)
   )
 }
 
