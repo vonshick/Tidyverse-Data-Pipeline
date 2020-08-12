@@ -7,5 +7,7 @@
   Sys.setenv("DB_NAME" = "postgres")
   Sys.setenv("DB_PORT" = "5432")
   Sys.setenv("DB_SCHEMA" = "public")
+
+  Sys.setenv("DATA_FILE_DIRECTORY" = file.path(getwd(), "data_files"))
 }
 

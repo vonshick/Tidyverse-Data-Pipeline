@@ -1,6 +1,7 @@
 extract_files_from_zip <- function() {
   tryCatch({
-    unzip(zipfile = "data_files/OneDrive_1_29.07.2020.zip", exdir ="data_files")
+    data_directory <- Sys.getenv("DATA_FILE_DIRECTORY")
+    unzip(zipfile = file.path(data_directory, "OneDrive_1_29.07.2020.zip"), exdir = data_directory)
     print("CSV files were extracted from zip to data_files directory.")
   }, error = function(err){
     print(paste("Extracting files from ZIP failed:", err, sep = " "))
@@ -11,9 +12,12 @@ extract_files_from_zip <- function() {
 load_data_from_csv_files <- function() {
   extract_files_from_zip()
 
-  class <- read_delim(file = 'data_files/class.csv', delim = ';')
-  test_level <- read_delim(file = 'data_files/test_level.csv', delim = ';')
-  test <- read_delim(fil = 'data_files/test.csv', delim = ';')
+
+  data_directory <- Sys.getenv("DATA_FILE_DIRECTORY")
+
+  class <- read_delim(file = file.path(data_directory, 'class.csv'), delim = ';')
+  test_level <- read_delim(file = file.path(data_directory, 'test_level.csv'), delim = ';')
+  test <- read_delim(fil = file.path(data_directory, 'test.csv'), delim = ';')
 
   return(list(class = class, test_level = test_level, test = test))
 }
