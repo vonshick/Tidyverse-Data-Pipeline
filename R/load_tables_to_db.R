@@ -29,7 +29,7 @@ insert_table_to_database <- function(data_set, data_set_name) {
   })
 }
 
-#' @import tidyverse
+#' @import purrr
 #' @export
 load_tables_to_database <- function() {
   output_data_sets <- generate_output_data_sets()
