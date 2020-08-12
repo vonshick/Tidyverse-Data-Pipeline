@@ -1,5 +1,5 @@
 test_that("Check if required columns are present in class dataset", {
-  data_sets_list <- check_id_uniqueness()
+  data_sets_list <- get_valid_data_sets()
 
   expect_true(
     all(
@@ -9,7 +9,7 @@ test_that("Check if required columns are present in class dataset", {
 })
 
 test_that("Check if required columns are present in test_level dataset", {
-  data_sets_list <- check_id_uniqueness()
+  data_sets_list <- get_valid_data_sets()
 
   expect_true(
     all(
@@ -19,7 +19,7 @@ test_that("Check if required columns are present in test_level dataset", {
 })
 
 test_that("Check if required columns are present in test dataset", {
-  data_sets_list <- check_id_uniqueness()
+  data_sets_list <- get_valid_data_sets()
 
   expect_true(
     all(

@@ -37,7 +37,7 @@ check_if_id_is_unique <- function(data_set) {
 #' @import purrr
 #' @import dplyr
 #' @export
-check_id_uniqueness <- function() {
+get_valid_data_sets <- function() {
   data_sets_list <- extract_data_from_csv_files()
 
   is_id_unique_for_datasets <- map_lgl(
